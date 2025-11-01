@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARNING: SYSTEM COMPROMISED</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Matrix rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            font-size: 14px;
+            color: #00ff00;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Main content */
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .warning-header {
+            font-size: 3em;
+            color: #ff0000;
+            text-shadow: 
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000;
+            animation: blink 1s infinite;
+            margin-bottom: 30px;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.5; }
+        }
+
+        .glitch {
+            font-size: 4em;
+            color: #00ff00;
+            text-shadow: 
+                2px 0 #00ff00,
+                -2px 0 #ff0000;
+            animation: glitch-anim 2s infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes glitch-anim {
+            0%, 100% {
+                text-shadow: 
+                    2px 0 #00ff00,
+                    -2px 0 #ff0000;
+            }
+            20% {
+                text-shadow: 
+                    -2px 0 #00ff00,
+                    2px 0 #ff0000,
+                    2px 2px 0 #ff0000,
+                    -2px -2px 0 #00ff00;
+            }
+            40% {
+                text-shadow: 
+                    2px 0 #00ff00,
+                    -2px 0 #ff0000,
+                    0 2px 0 #ff0000,
+                    0 -2px 0 #00ff00;
+            }
+            60% {
+                text-shadow: 
+                    -2px 0 #00ff00,
+                    2px 0 #ff0000,
+                    2px 2px 0 #ff0000,
+                    -2px -2px 0 #00ff00;
+            }
+            80% {
+                text-shadow: 
+                    2px 0 #00ff00,
+                    -2px 0 #ff0000;
+            }
+        }
+
+        .message {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        .message p {
+            margin: 10px 0;
+            animation: typewriter 3s steps(40) infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #00ff00;
+        }
+
+        @keyframes typewriter {
+            0%, 100% {
+                width: 0;
+                border-right: 2px solid #00ff00;
+            }
+            50% {
+                width: 100%;
+                border-right: 2px solid #00ff00;
+            }
+            51% {
+                border-right: none;
+            }
+        }
+
+        .hack-button {
+            background: linear-gradient(45deg, #00ff00, #008000);
+            border: 2px solid #00ff00;
+            color: #000;
+            font-size: 1.5em;
+            padding: 20px 40px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 
+                0 0 20px #00ff00,
+                inset 0 0 20px rgba(0, 255, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hack-button:hover {
+            box-shadow: 
+                0 0 40px #00ff00,
+                0 0 80px #00ff00,
+                inset 0 0 40px rgba(0, 255, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .hack-button:active {
+            transform: scale(0.98);
+        }
+
+        .hack-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden-content {
+            display: none;
+            margin-top: 50px;
+            padding: 30px;
+            border: 2px solid #00ff00;
+            background: rgba(0, 255, 0, 0.05);
+            box-shadow: 0 0 30px #00ff00;
+            animation: reveal 1s ease-in;
+        }
+
+        .hidden-content.show {
+            display: block;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hacker-info {
+            font-size: 1.5em;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .terminal-output {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff00;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .terminal-line {
+            margin: 5px 0;
+            animation: typewriter-line 0.5s steps(30) forwards;
+            opacity: 0;
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 0.5s; }
+        .terminal-line:nth-child(2) { animation-delay: 1s; }
+        .terminal-line:nth-child(3) { animation-delay: 1.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 2s; }
+        .terminal-line:nth-child(5) { animation-delay: 2.5s; }
+        .terminal-line:nth-child(6) { animation-delay: 3s; }
+        .terminal-line:nth-child(7) { animation-delay: 3.5s; }
+        .terminal-line:nth-child(8) { animation-delay: 4s; }
+        .terminal-line:nth-child(9) { animation-delay: 4.5s; }
+
+        @keyframes typewriter-line {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar styling */
+        .terminal-output::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .terminal-output::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        .terminal-output::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 5px;
+        }
+
+        .terminal-output::-webkit-scrollbar-thumb:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <div class="container">
+        <div class="warning-header">⚠ WARNING ⚠</div>
+        <div class="glitch">YOU'RE HACKED</div>
+        
+        <div class="message">
+            <p>Your system has been compromised!</p>
+            <p>Unauthorized access detected...</p>
+            <p>All data is being extracted...</p>
+        </div>
+
+        <button class="hack-button" onclick="revealHacker()">
+            CLICK TO SEE WHO HACKED YOU
+        </button>
+
+        <div class="hidden-content" id="hiddenContent">
+            <div class="hacker-info">
+                INITIATING DATA RETRIEVAL...
+            </div>
+            <div class="terminal-output" id="terminalOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        // Create matrix rain effect
+        function createMatrixRain() {
+            const matrixRain = document.getElementById('matrixRain');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+            
+            for (let i = 0; i < 50; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = Math.random() * 100 + '%';
+                column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                column.style.animationDelay = Math.random() * 2 + 's';
+                
+                let text = '';
+                const length = Math.floor(Math.random() * 20 + 10);
+                for (let j = 0; j < length; j++) {
+                    text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+                }
+                
+                column.innerHTML = text;
+                matrixRain.appendChild(column);
+            }
+        }
+
+        // Reveal hacker information
+        function revealHacker() {
+            const hiddenContent = document.getElementById('hiddenContent');
+            const terminalOutput = document.getElementById('terminalOutput');
+            
+            hiddenContent.classList.add('show');
+            
+            // Clear previous output
+            terminalOutput.innerHTML = '';
+            
+            // Terminal lines
+            const lines = [
+                ['C:\\>', 'scanning network...'],
+                ['C:\\>', 'Found vulnerable target: YOUR_DEVICE'],
+                ['C:\\>', 'Initiating brute force attack...'],
+                ['C:\\>', 'Authentication bypassed ✓'],
+                ['C:\\>', 'Injecting payload...'],
+                ['C:\\>', 'Payload deployed successfully ✓'],
+                ['C:\\>', 'Establishing backdoor...'],
+                ['C:\\>', 'MISSION ACCOMPLISHED ✓'],
+                ['>', '<span class="loading">████████████</span> Decrypting hacker identity...']
+            ];
+            
+            setTimeout(() => {
+                lines.forEach((line, index) => {
+                    setTimeout(() => {
+                        const div = document.createElement('div');
+                        div.className = 'terminal-line';
+                        div.innerHTML = `<span style="color: #00ff00;">${line[0]}</span> ${line[1]}`;
+                        terminalOutput.appendChild(div);
+                    }, index * 500);
+                });
+                
+                // Show hacker identity after all terminal lines
+                setTimeout(() => {
+                    const hackerDiv = document.createElement('div');
+                    hackerDiv.className = 'terminal-line';
+                    hackerDiv.style.fontSize = '3em';
+                    hackerDiv.style.fontWeight = 'bold';
+                    hackerDiv.style.color = '#00ff00';
+                    hackerDiv.style.marginTop = '20px';
+                    hackerDiv.style.textAlign = 'center';
+                    hackerDiv.innerHTML = '<div style="border: 2px solid #00ff00; padding: 20px; background: rgba(0, 255, 0, 0.1); text-shadow: 0 0 20px #00ff00;">L Morningstar😎</div>';
+                    terminalOutput.appendChild(hackerDiv);
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                }, lines.length * 500 + 1000);
+            }, 500);
+        }
+
+        // Initialize matrix rain on page load
+        window.addEventListener('load', createMatrixRain);
+    </script>
+</body>
+</html>
